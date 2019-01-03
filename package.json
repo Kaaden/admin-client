@@ -7,6 +7,7 @@
     "precommit": "npm run lint"
   },
   "dependencies": {
+    "antd": "^3.11.6",
     "axios": "^0.18.0",
     "dva": "^2.4.1",
     "umi": "^1.0.0",
