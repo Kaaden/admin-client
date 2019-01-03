@@ -114,3 +114,7 @@ td, :global(#root) {
 .line3 {
   -webkit-line-clamp: 3;
 }
+@font-face {
+  font-family: 'beyno';
+  src: url("./assets/BEYNO.ttf");
+}
