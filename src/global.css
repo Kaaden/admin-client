@@ -118,3 +118,9 @@ td, :global(#root) {
   font-family: 'beyno';
   src: url("./assets/BEYNO.ttf");
 }
+
+.contain{
+  width:100%;
+  height:100%;
+  position: relative;
+}
