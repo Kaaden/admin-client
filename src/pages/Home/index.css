@@ -1,0 +1,21 @@
+.bg{
+    width:100%;
+    height:100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 1;
+}
+.tip{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    font-family: "beyno";
+    font-size: 40px;
+    font-weight: 600;
+    color:#fff;
+    z-index: 2;
+  }
+  

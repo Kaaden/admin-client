@@ -8,13 +8,13 @@ export default {
   state: {
     logoImg: "",
     auth: "",
-    collapsed: false
+    collapsed: false,
+    Tags: []
   },
 
   reducers: {
     saveLogin(state, { payload }) {
       let auth = payload
-
       return { ...state, auth }
     },
     saveImg(state, { payload }) {
@@ -23,6 +23,9 @@ export default {
     changeColl(state, { payload }) {
       let collapsed = !state.collapsed
       return { ...state, collapsed };
+    },
+    saveTags(state, { payload }) {
+      return { ...state, Tags: payload }
     }
   },
 
@@ -42,6 +45,14 @@ export default {
       } else {
         return message.error(data.msg)
       }
+    },
+    *getTags({ payload }, { call, put }) {
+      const { data } = yield call(service.getTags, { ...payload })
+      if (data.isok) {
+        yield put({ type: "saveTags", payload: data.data })
+      } else {
+        return message.error(data.msg)
+      }
     }
   },
 
@@ -49,7 +60,9 @@ export default {
   subscriptions: {
     setup({ dispatch, history, query }) {
       return history.listen(async ({ pathname, search, query }) => {
-        // let auth = window.sessionStorage.getItem("auth")
+        if (history.location.pathname === '/') {
+          window.sessionStorage.clear()
+        }
       })
     },
   },

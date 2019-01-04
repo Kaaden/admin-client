@@ -7,13 +7,20 @@ export function getBing(body) {
   return request({
     method: "post",
     url: `${host}/getBing`,
-    data:  qs.stringify(body),
+    data: qs.stringify(body),
   })
 }
 export function Login(body) {
   return request({
     method: "post",
     url: `${host}/login`,
+    data: qs.stringify(body),
+  })
+}
+export function getTags(body) {
+  return request({
+    method: "post",
+    url: `${host}/tags`,
     data: qs.stringify(body),
   })
 }
