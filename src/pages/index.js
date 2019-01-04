@@ -12,14 +12,12 @@ class Page extends Component {
     }
     this.props.dispatch({ type: "admin/featchImg" })
   }
-
   render() {
     const { logoImg } = this.props
     return (
-      <div className="contain">
+      <div className="contain" style={{ backgroundImage:`url(${logoImg})`,backgroundSize:"cover",backgroundRepeat:"no-repeat" }}>
         <div className={styles.containbg}></div>
-        <img src={logoImg} alt=""></img>
-        <Login/>
+        <Login />
       </div>
     )
   }

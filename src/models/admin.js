@@ -8,6 +8,7 @@ export default {
   state: {
     logoImg: "",
     auth: "",
+    collapsed: false
   },
 
   reducers: {
@@ -19,6 +20,10 @@ export default {
     saveImg(state, { payload }) {
       return { ...state, logoImg: payload };
     },
+    changeColl(state, { payload }) {
+      let collapsed = !state.collapsed
+      return { ...state, collapsed };
+    }
   },
 
   effects: {

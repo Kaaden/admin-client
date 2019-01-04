@@ -124,3 +124,6 @@ td, :global(#root) {
   height:100%;
   position: relative;
 }
+.containMain{
+  background:#f5f5f5;
+}
