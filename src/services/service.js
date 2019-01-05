@@ -24,3 +24,17 @@ export function getTags(body) {
     data: qs.stringify(body),
   })
 }
+export function changeTags(body) {
+  return request({
+    method: "post",
+    url: `${host}/changeTags`,
+    data: qs.stringify(body),
+  })
+}
+export function DelTags(body) {
+  return request({
+    method: "post",
+    url: `${host}/delTags`,
+    data: qs.stringify(body),
+  })
+}

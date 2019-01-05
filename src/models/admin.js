@@ -9,7 +9,8 @@ export default {
     logoImg: "",
     auth: "",
     collapsed: false,
-    Tags: []
+    Tags: [],
+    Tagstotal: 0,
   },
 
   reducers: {
@@ -25,7 +26,20 @@ export default {
       return { ...state, collapsed };
     },
     saveTags(state, { payload }) {
-      return { ...state, Tags: payload }
+      return { ...state, Tags: payload.list, Tagstotal: payload.total }
+    },
+    changTag(state, { payload }) {
+      const { type, id, tag } = payload
+      let Tags = state.Tags.splice(0)
+      if (Tags.length) {
+        let index = Tags.findIndex(f => f.id === id)
+        if (type === "add") {
+          index !== -1 ? Tags[index].tag = tag : Tags.push({ id, tag })
+        } else {
+          Tags.splice(index, 1)
+        }
+      }
+      return { ...state, Tags }
     }
   },
 
@@ -47,10 +61,18 @@ export default {
       }
     },
     *getTags({ payload }, { call, put }) {
-      const { data } = yield call(service.getTags, { ...payload })
-      if (data.isok) {
-        yield put({ type: "saveTags", payload: data.data })
-      } else {
+      const { data } = yield call(service.getTags, { ...payload, pagesize: 10 })
+      yield put({ type: "saveTags", payload: { list: data.data, total: data.total } })
+    },
+    *changeTags({ payload }, { call, put }) {
+      const { data } = yield call(service.changeTags, { ...payload })
+      if (!data.isok) {
+        return message.error(data.msg)
+      }
+    },
+    *DelTags({ payload }, { call, put }) {
+      const { data } = yield call(service.DelTags, { ...payload })
+      if (!data.isok) {
         return message.error(data.msg)
       }
     }

@@ -6,16 +6,25 @@ import { connect } from "dva"
 
 import { Button, Modal, Input } from "antd"
 class tagsModal extends Component {
-    state = { visible: false, value: "" }
-    handleOk = () => {
-        console.log(1)
+    state = { visible: false, value: "", item: "" }
+    handleOk = async () => {
+        const {dispatch,getData}=this.props
+        const { value, item } = this.state
+        if (value) {
+            await dispatch({ type: "admin/changeTags", payload: { tag: value, id: item ? item.id : "", tagName: item ? item.tag : "" } })
+            getData(1)
+        }
+        this.setState({ value: "", visible: false })
     }
     handleShow = () => {
-        const { visible } = this.state
-        this.setState({ visible: !visible })
+        const { item } = this.props
+        this.setState({ visible: true, item: item ? item : "", value: item ? item.tag : "" })
     }
-    valueChange(e) {
-        console.log(e)
+    handleCancle = () => {
+        this.setState({ visible: false, value: "", item: "" })
+    }
+    valueChange = (e) => {
+        this.setState({ value: e.target.value })
     }
     render() {
         const { visible, value } = this.state
@@ -27,13 +36,13 @@ class tagsModal extends Component {
                     title={type ? "增加标签" : "修改标签"}
                     visible={visible}
                     onOk={this.handleOk}
-                    onCancel={this.handleShow}
+                    onCancel={this.handleCancle}
                     okText="确定"
                     cancelText="取消"
                 >
                     <div className="f fc">
                         <span className="fk" style={{ marginRight: 10 }}>标签</span>
-                        <Input onChange={this.valueChange} />
+                        <Input onChange={this.valueChange} value={value} />
                     </div>
                 </Modal>
             </div>

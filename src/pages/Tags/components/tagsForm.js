@@ -7,10 +7,10 @@ const Search = Input.Search
 class tagsForm extends Component {
     state = {}
     searchTags = (e) => {
-        this.props.dispatch({ type: "admin/getTags", payload: { tag: e } })
-        console.log(e)
+        this.props.getData(1, e)
     }
     render() {
+        const { getData } = this.props
         return (
             <div className={styles.topTags}>
                 <Search
@@ -19,7 +19,7 @@ class tagsForm extends Component {
                     enterButton
                     style={{ width: 300, marginRight: 30 }}
                 />
-                <TagsModal type={true} />
+                <TagsModal type={true} getData={getData} />
             </div>
         )
     }
