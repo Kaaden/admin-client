@@ -29,6 +29,7 @@ td, :global(#root) {
     padding: 0;
     box-sizing: border-box;
 }
+
 :global(#root){
   height:100%;
 }

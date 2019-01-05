@@ -15,7 +15,7 @@ const NavigaList = [
     },
     {
         key: "content",
-        title: "列表",
+        title: "文章",
         path: "/content",
         childrenNav: [],
         icon:"bars",

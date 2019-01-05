@@ -7,9 +7,10 @@ class Page extends Component {
     componentDidMount() {
     }
     toggleCollapsed = () => {
-        this.props.dispatch({ type: "admin/changeColl", })
+        const { collapsed } = this.props
+        this.props.dispatch({ type: "admin/changeColl", payload: { collapsed: !collapsed } })
     }
-    quit=()=>{
+    quit = () => {
         window.location.href = ""
         window.sessionStorage.clear()
     }

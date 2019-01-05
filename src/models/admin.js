@@ -11,6 +11,8 @@ export default {
     collapsed: false,
     Tags: [],
     Tagstotal: 0,
+    Content: [],
+    Contentotal: 0,
   },
 
   reducers: {
@@ -22,24 +24,19 @@ export default {
       return { ...state, logoImg: payload };
     },
     changeColl(state, { payload }) {
-      let collapsed = !state.collapsed
-      return { ...state, collapsed };
+      return { ...state, collapsed: payload.collapsed };
     },
     saveTags(state, { payload }) {
       return { ...state, Tags: payload.list, Tagstotal: payload.total }
     },
-    changTag(state, { payload }) {
-      const { type, id, tag } = payload
-      let Tags = state.Tags.splice(0)
-      if (Tags.length) {
-        let index = Tags.findIndex(f => f.id === id)
-        if (type === "add") {
-          index !== -1 ? Tags[index].tag = tag : Tags.push({ id, tag })
-        } else {
-          Tags.splice(index, 1)
-        }
+    saveContent(state, { payload }) {
+      if (payload.list.length) {
+        payload.list.map((item) => {
+          item.content = item.content.replace(/<[^>]+>/g, "")
+          item.content = item.content.replace(/↵/g, "");
+        })
       }
-      return { ...state, Tags }
+      return { ...state, Content: payload.list, Contentotal: payload.total }
     }
   },
 
@@ -75,7 +72,15 @@ export default {
       if (!data.isok) {
         return message.error(data.msg)
       }
-    }
+    },
+    *getContent({ payload }, { call, put }) {
+      const { data } = yield call(service.getContent, { ...payload })
+      if (data.isok) {
+        yield put({ type: "saveContent", payload: { list: data.list, total: data.total } })
+      } else {
+        return message.error(data.msg)
+      }
+    },
   },
 
 

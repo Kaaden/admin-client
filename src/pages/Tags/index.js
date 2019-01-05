@@ -11,14 +11,13 @@ class Tags extends Component {
     }
     getData = async (current, tag) => {
         await this.setState({ loading: true })
-        this.props.dispatch({ type: "admin/getTags", payload: { pageindex: current, tag: tag ? tag : "" } })
+        await this.props.dispatch({ type: "admin/getTags", payload: { pageindex: current, tag: tag ? tag : "" } })
         await this.setState({ loading: false })
         this.setState({ current })
     }
     pageChange = async (e) => {
         this.getData(e)
     }
-
     Del = async (item) => {
         const { current } = this.state
         if (item) {
