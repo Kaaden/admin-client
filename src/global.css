@@ -86,7 +86,9 @@ td, :global(#root) {
   -ms-flex-pack: justify;
   justify-content: space-between;
 }
-
+.fk{
+  flex-shrink: 0;
+}
 .rel {
   position: relative;
 }

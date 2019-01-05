@@ -4,9 +4,9 @@
 import { Component } from "react"
 import { connect } from "dva"
 
-import { Button, Modal } from "antd"
+import { Button, Modal, Input } from "antd"
 class tagsModal extends Component {
-    state = { visible: false }
+    state = { visible: false, value: "" }
     handleOk = () => {
         console.log(1)
     }
@@ -14,10 +14,12 @@ class tagsModal extends Component {
         const { visible } = this.state
         this.setState({ visible: !visible })
     }
+    valueChange(e) {
+        console.log(e)
+    }
     render() {
-        const { visible } = this.state
+        const { visible, value } = this.state
         const { type } = this.props
-        console.log(type)
         return (
             <div>
                 <Button type="primary" icon={type ? "plus" : ""} onClick={this.handleShow}>{type ? "增加标签" : "修改"}</Button>
@@ -26,14 +28,16 @@ class tagsModal extends Component {
                     visible={visible}
                     onOk={this.handleOk}
                     onCancel={this.handleShow}
+                    okText="确定"
+                    cancelText="取消"
                 >
-                    <p>Some contents...</p>
-                    <p>Some contents...</p>
-                    <p>Some contents...</p>
+                    <div className="f fc">
+                        <span className="fk" style={{ marginRight: 10 }}>标签</span>
+                        <Input onChange={this.valueChange} />
+                    </div>
                 </Modal>
             </div>
         )
     }
 }
-
 export default connect()(tagsModal)

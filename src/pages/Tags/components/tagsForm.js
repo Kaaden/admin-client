@@ -1,6 +1,6 @@
 import { Component } from "react"
 import { connect } from "dva"
-import { Input, Button } from 'antd';
+import { Input, } from 'antd';
 import styles from "../index.css"
 import TagsModal from "./tagsModal"
 const Search = Input.Search
