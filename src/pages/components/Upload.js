@@ -2,26 +2,44 @@ import { Component } from "react"
 import { connect } from "dva"
 import { Upload, Icon } from 'antd'
 class Page extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            imageUrl: ""
+        }
+    }
     state = {
         loading: false,
-        imageUrl: ""
     }
+    componentDidMount() {
+        const { img } = this.props
+        if (img) {
+            this.setState({ imageUrl: img })
+            this.triggerChange(img)
+        } else {
+            this.triggerChange("")
+        }
+    }
+
     handleChange = (info) => {
         let { file } = info
         if (file.status === "uploading") {
             this.setState({ loading: true })
         }
         if (file.status === "done") {
-            this.setState({ loading: false, imageUrl: "http://127.0.0.1:80" + file.response.url })
+            let imageUrl = "http://127.0.0.1:80" + file.response.url
+            this.setState({ loading: false, imageUrl })
+            this.triggerChange(imageUrl)
+        }
+    }
+    triggerChange = (imgs) => {
+        const onChange = this.props.onChange
+        if (onChange) {
+            onChange(imgs)
         }
     }
     render() {
-        const { img } = this.props
-        let { imageUrl, loading } = this.state
-
-        if (img && !imageUrl) {
-            imageUrl = img
-        }
+        const { imageUrl, loading } = this.state
         return (
             <Upload
                 accept="image/*"

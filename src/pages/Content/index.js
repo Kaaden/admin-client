@@ -37,6 +37,7 @@ class Page extends Component {
                                     description={
                                         <div className="f fv">
                                             <Ellipsis length={40}>{item.content}</Ellipsis>
+                                            <span style={{ marginTop: 10 }}>分类：<span className={styles.time} >{item.category}</span></span>
                                             <span style={{ marginTop: 10 }}>发布时间：<span className={styles.time}>{item.time}</span></span>
                                         </div>
                                     }

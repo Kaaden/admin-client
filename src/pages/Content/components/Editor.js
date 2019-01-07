@@ -62,7 +62,7 @@ class Editor extends Component {
                             )}
                         </FormItem>
                         <FormItem {...formItemLayout} label="封面图片">
-                            {getFieldDecorator("img")(
+                            {getFieldDecorator("thumb")(
                                 <Upload img={selItem.img} />
                             )}
                         </FormItem>
@@ -78,7 +78,7 @@ class Editor extends Component {
                                 </Select>
                             )}
                         </FormItem>
-                        {/* <FormItem {...formItemLayout} label="文章内容">
+                        <FormItem {...formItemLayout} label="文章内容">
                             {getFieldDecorator("content", {
                                 rules: [{ required: true, message: "请输入文章内容" }],
                                 // initialValue: selItem.category
@@ -91,7 +91,7 @@ class Editor extends Component {
                                     onSave={this.submitContent}
                                 />
                             )}
-                        </FormItem> */}
+                        </FormItem>
                         <FormItem wrapperCol={{ span: 12, offset: 4 }}>
                             <Button type="primary" htmlType="submit" style={{ marginRight: 16 }}>完成</Button>
                             <Button onClick={this.handleCancle} >取消</Button>
