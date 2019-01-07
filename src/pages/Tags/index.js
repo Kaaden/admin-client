@@ -2,7 +2,7 @@ import { Component } from "react"
 import { connect } from "dva"
 import TagsForm from "./components/tagsForm"
 import TagsModal from "./components/tagsModal"
-import { Table, Button } from 'antd';
+import { Table, Button, Popconfirm } from 'antd';
 
 class Tags extends Component {
     state = { current: 1, loading: false }
@@ -48,7 +48,9 @@ class Tags extends Component {
                 width: 300,
                 render: (item) => (
                     <div className="f">
-                        <Button type="danger" style={{ marginRight: 20 }} onClick={() => this.Del(item)}>删除</Button>
+                        <Popconfirm placement="top" title="确认删除？" okText="确定" cancelText="取消" onConfirm={() => this.Del(item)}>
+                            <Button type="danger" style={{ marginRight: 20 }} >删除</Button>
+                        </Popconfirm>
                         <TagsModal type={false} item={item} />
                     </div>
                 )

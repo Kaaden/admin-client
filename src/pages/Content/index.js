@@ -3,12 +3,13 @@ import { connect } from "dva"
 import { Card, Icon, Row, Col } from 'antd';
 import Ellipsis from 'ant-design-pro/lib/Ellipsis';
 import styles from "./index.css"
+import Editor from "./components/Editor"
 const { Meta } = Card;
 class Page extends Component {
-    state = { loading: false }
+    state = { loading: false, }
     componentDidMount() {
         this.getData()
-
+        this.props.dispatch({ type: "admin/getTags" })
     }
     getData = async () => {
         await this.setState({ loading: true })
@@ -17,9 +18,10 @@ class Page extends Component {
     }
     render() {
         const { loading } = this.state
-        const { Content, Contentotal } = this.props
+        const { Content, Contentotal, Tags } = this.props
         return (
             <div className="main">
+                <Editor Tags={Tags} type={false} />
                 <Row type="flex">
                     {Content.length > 0 && Content.map((item) => (
                         <Col xs={24} lg={12} xl={8} xxl={6} key={item.id} style={{ padding: 10 }}>
@@ -28,7 +30,7 @@ class Page extends Component {
                                 bordered
                                 loading={loading}
                                 cover={!loading && <img alt="example" src={item.img} style={{ height: 250 }} />}
-                                actions={!loading && [<a><Icon type="edit" />编辑</a>, <a><Icon type="delete" />删除</a>]}
+                                actions={!loading && [<Editor Tags={Tags} ct={item} type={true} />, <a><Icon type="delete" />删除</a>]}
                             >
                                 <Meta
                                     title={item.title}
@@ -48,7 +50,7 @@ class Page extends Component {
     }
 }
 function mapStateToProps(state) {
-    const { Content, Contentotal } = state.admin
-    return { Content, Contentotal }
+    const { Content, Contentotal, Tags } = state.admin
+    return { Content, Contentotal, Tags }
 }
 export default connect(mapStateToProps)(Page)

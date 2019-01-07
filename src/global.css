@@ -33,6 +33,9 @@ td, :global(#root) {
 :global(#root){
   height:100%;
 }
+:global(.ant-upload.ant-upload-select-picture-card){
+  width:100%;
+}
 .f {
   display: -webkit-box;
   display: -webkit-flex;
@@ -156,4 +159,7 @@ td, :global(#root) {
   -moz-border-radius: 2em;
   border-radius: 2em;
   background-color: rgba(0, 0, 0, 0.15);
+}
+.bf-content{
+  height:300px
 }
