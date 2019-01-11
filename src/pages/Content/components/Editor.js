@@ -19,19 +19,29 @@ class Editor extends Component {
         this.setState({ visible: false, selItem: "" })
     }
     handleShow = (item) => {
+        if(item){
+            let value={
+                title:item.title,
+                content: BraftEditor.createEditorState(item.content),
+                authors:item.authors,
+                category: item.category
+
+            }
+            this.props.form.setFieldsValue({ ...value })
+        }
         this.setState({ visible: true, selItem: item })
     }
     handleSubmit = (event) => {
         event.preventDefault()
         this.props.form.validateFields((error, values) => {
             if (!error) {
-                console.log(values)
+                let value=values.content.toHTML()
+                console.log(value)
             }
         })
     }
-
     render() {
-        const { visible, selItem, editorState } = this.state
+        const { visible, selItem } = this.state
         const { Tags, form, ct, type } = this.props
         const { getFieldDecorator } = form
         return (
@@ -43,7 +53,6 @@ class Editor extends Component {
                         <FormItem {...formItemLayout} label="文章标题">
                             {getFieldDecorator("title", {
                                 rules: [{ required: true, message: "请输入标题" }],
-                                initialValue: selItem.title
                             })(
                                 <Input
                                     placeholder="请输入标题"
@@ -54,7 +63,6 @@ class Editor extends Component {
                         <FormItem {...formItemLayout} label="文章作者">
                             {getFieldDecorator("authors", {
                                 rules: [{ required: true, message: "请输入作者" }],
-                                initialValue: selItem.authors
                             })(
                                 <Input
                                     placeholder="请输入作者"
@@ -69,7 +77,6 @@ class Editor extends Component {
                         <FormItem {...formItemLayout} label="选择分类">
                             {getFieldDecorator("category", {
                                 rules: [{ required: true, message: "请选择分类" }],
-                                initialValue: selItem.category
                             })(
                                 <Select>
                                     {Tags && Tags.length > 0 && Tags.map((item) => (
@@ -81,12 +88,10 @@ class Editor extends Component {
                         <FormItem {...formItemLayout} label="文章内容">
                             {getFieldDecorator("content", {
                                 rules: [{ required: true, message: "请输入文章内容" }],
-                                // initialValue: selItem.category
                             })(
                                 <BraftEditor
                                     style={{ border: '1px solid #d9d9d9', borderRadius: "4px" }}
                                     controls={controls}
-                                    // value={editorState}
                                     onChange={this.handleEditorChange}
                                     onSave={this.submitContent}
                                 />
