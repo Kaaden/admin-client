@@ -45,10 +45,11 @@ export function getContent(body) {
     data: qs.stringify(body),
   })
 } 
-export function getEditor(body) {
+
+export function addContent(body) {
   return request({
     method: "post",
-    url: `${host}/getEditor`,
+    url: `${host}/addContent`,
     data: qs.stringify(body),
   })
 }

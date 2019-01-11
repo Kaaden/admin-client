@@ -30,7 +30,7 @@ class Editor extends Component {
         if (id) {
             let { data } = await axios.post("http://127.0.0.1:80/getEditor", qs.stringify({ id }))
             if (data.isok) {
-                await this.setState({imgSrc: data.data.img})
+                await this.setState({ imgSrc: data.data.img })
                 let value = {
                     title: data.data.title,
                     content: BraftEditor.createEditorState(data.data.content),
@@ -46,11 +46,16 @@ class Editor extends Component {
         this.props.dispatch({ type: "admin/getSel", payload: true })
     }
     handleSubmit = (event) => {
+        const { dispatch, history, form } = this.props
+        const { id } = history.location.query
         event.preventDefault()
-        this.props.form.validateFields((error, values) => {
+        form.validateFields((error, values) => {
             if (!error) {
-                let value = values.content.toHTML()
-                console.log(value)
+                values.content = values.content.toHTML()
+                if (id) {
+                    values.id = id
+                }
+                dispatch({ type: "admin/addContent", payload: values })
             }
         })
     }
@@ -58,11 +63,11 @@ class Editor extends Component {
         this.props.dispatch(routerRedux.push({ pathname: '/content' }));
     }
     render() {
-        const { loading,imgSrc } = this.state
+        const { loading, imgSrc } = this.state
         const { Tags, form } = this.props
         const { getFieldDecorator } = form
         return (
-            <div className="main" style={{padding:"30px 0 0 0"}}>
+            <div className="main" style={{ padding: "30px 0 0 0" }}>
                 <Spin spinning={loading}>
                     <Form onSubmit={this.handleSubmit}>
                         <FormItem {...formItemLayout} label="文章标题">
@@ -83,7 +88,7 @@ class Editor extends Component {
                             )}
                         </FormItem>
                         <FormItem {...formItemLayout} label="封面图片">
-                            {getFieldDecorator("thumb")(
+                            {getFieldDecorator("img")(
                                 <Upload img={imgSrc} />
                             )}
                         </FormItem>
@@ -111,8 +116,8 @@ class Editor extends Component {
                             )}
                         </FormItem>
                         <FormItem wrapperCol={{ span: 12, offset: 4 }}>
-                            <Button type="primary" htmlType="submit" style={{ marginRight: 16 }}>完成</Button>
-                            <Button onClick={this.handleCancle} >返回</Button>
+                            <Button type="primary" htmlType="submit" style={{ marginRight: 16, width: 100 }}>完成</Button>
+                            <Button style={{ backgroundColor: "#002140", borderColor: "#002140", width: 100, color: "#fff" }} onClick={this.handleCancle} >返回</Button>
                         </FormItem>
                     </Form>
                 </Spin>
