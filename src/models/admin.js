@@ -13,7 +13,7 @@ export default {
     Tagstotal: 0,
     Content: [],
     Contentotal: 0,
-    imgSrc: ""
+    navtive: true,
   },
 
   reducers: {
@@ -40,7 +40,7 @@ export default {
       return { ...state, Content: payload.list, Contentotal: payload.total }
     },
     getSel(state, { payload }) {
-      return { ...state, imgSrc: payload }
+      return { ...state, navtive: payload }
     }
   },
 

@@ -1,6 +1,7 @@
 import { Component } from "react"
 import { connect } from "dva"
 import { Upload, Icon } from 'antd'
+let preImg = ""
 class Page extends Component {
     constructor(props) {
         super(props)
@@ -11,13 +12,16 @@ class Page extends Component {
     state = {
         loading: false,
     }
-    componentDidMount() {
+    componentDidUpdate() {
         const { img } = this.props
-        if (img) {
-            this.setState({ imageUrl: img })
-            this.triggerChange(img)
-        } else {
-            this.triggerChange("")
+        if (preImg !== img) {
+            preImg = img
+            if (img) {
+                this.setState({ imageUrl: img })
+                this.triggerChange(img)
+            } else {
+                this.triggerChange("")
+            }
         }
     }
 

@@ -20,7 +20,7 @@ class Layout extends Component {
     render() {
         let showClient = true
         let auth = window.sessionStorage.getItem("auth")
-        let { logoImg, children } = this.props
+        let { logoImg, children, navtive } = this.props
         if (NavigaList.length) {
             let index = NavigaList.findIndex(f => f.path === children.props.location.pathname)
             if (index === -1) {
@@ -30,7 +30,7 @@ class Layout extends Component {
         if (auth) {
             return (
                 <div className="contain f" >
-                    <Navigator children={children} />
+                    {navtive && <Navigator children={children} />}
                     <div className="containMain  f fv f1">
                         <Header />
                         <div className="containf f1">
@@ -52,8 +52,8 @@ class Layout extends Component {
 }
 
 function mapStateToProps(state) {
-    const { auth, logoImg } = state.admin
-    return { auth, logoImg }
+    const { auth, logoImg, navtive } = state.admin
+    return { auth, logoImg, navtive }
 }
 const mapState = connect(mapStateToProps)(Layout)
 export default withRouter(mapState)

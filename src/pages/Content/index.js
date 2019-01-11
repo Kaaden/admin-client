@@ -4,8 +4,6 @@ import { Card, Icon, Row, Col, Button } from 'antd';
 import Ellipsis from 'ant-design-pro/lib/Ellipsis';
 import styles from "./index.css"
 import { routerRedux } from "dva/router"
-// import Editor from "./components/Editor"
-// import Link from "umi/link"
 const { Meta } = Card;
 class Page extends Component {
     state = { loading: false, }
@@ -18,8 +16,7 @@ class Page extends Component {
         await this.props.dispatch({ type: "admin/getContent", payload: { status: 1, pageindex: 1 } })
         await this.setState({ loading: false })
     }
-    handleShow = async (id) => {
-        // await this.props.dispatch({ type: "admin/getSel", payload: item })
+    handleShow = (id) => {
         this.props.dispatch(routerRedux.push({ pathname: '/Editor', query: { id } }));
     }
     render() {

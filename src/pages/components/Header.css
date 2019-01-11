@@ -24,3 +24,12 @@
 .menu:hover span{
     color:#fff;
 }
+.title{
+    color: #002140;
+    text-align: center;
+    height: 64px;
+    line-height: 64px;
+    font-weight: 600;
+    font-size: 20px;
+    font-family: "beyno";
+}

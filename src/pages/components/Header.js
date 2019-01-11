@@ -1,7 +1,8 @@
 import { Component } from "react"
 import { connect } from "dva"
 import styles from "./Header.css"
-import { Menu, Icon, Badge, Dropdown } from 'antd';
+import { Menu, Icon, Badge, Dropdown, Button } from 'antd';
+import { routerRedux } from "dva/router"
 class Page extends Component {
     state = {}
     componentDidMount() {
@@ -24,9 +25,12 @@ class Page extends Component {
             </Menu.Item>
         </Menu>
     );
-
+    handleCancle = () => {
+        this.props.dispatch({ type: "admin/getSel", payload: true })
+        this.props.dispatch(routerRedux.push({ pathname: '/content' }));
+    }
     render() {
-        const { collapsed, auth } = this.props
+        const { collapsed, auth, navtive } = this.props
         let auther = window.sessionStorage.getItem("auth")
         let user
         if (auther) {
@@ -34,7 +38,9 @@ class Page extends Component {
         }
         return (
             <div className={styles.Header} >
-                <Icon type={collapsed ? 'menu-unfold' : 'menu-fold'} onClick={this.toggleCollapsed} className={styles.close} />
+                {navtive ? <Icon type={collapsed ? 'menu-unfold' : 'menu-fold'} onClick={this.toggleCollapsed} className={styles.close} /> :
+                    <Button style={{ backgroundColor: "#002140", borderColor: "#002140" }} icon="left" onClick={this.handleCancle} type="primary" >返回</Button>}
+                {!navtive && <div className={styles.title}>KAADEN</div>}
                 <Dropdown overlay={this.menu} trigger={['hover']}>
                     <div className={styles.menu} >
                         <Badge status="success" text={user.username} />
@@ -46,7 +52,7 @@ class Page extends Component {
 }
 
 function mapStateToProps(state) {
-    const { collapsed, auth } = state.admin
-    return { collapsed, auth }
+    const { collapsed, auth, navtive } = state.admin
+    return { collapsed, auth, navtive }
 }
 export default connect(mapStateToProps)(Page)

@@ -137,8 +137,9 @@ td, :global(#root) {
 }
 .containf{
   margin: 20px;
- overflow: hidden;
+  overflow: hidden;
   background: #fff;
+  box-shadow: 0 1px 4px rgba(0,21,41,.08);
 }
 .main{
   width: 100%;
@@ -159,7 +160,4 @@ td, :global(#root) {
   -moz-border-radius: 2em;
   border-radius: 2em;
   background-color: rgba(0, 0, 0, 0.15);
-}
-.bf-content{
-  height:300px
 }
