@@ -13,6 +13,7 @@ export default {
     Tagstotal: 0,
     Content: [],
     Contentotal: 0,
+    imgSrc: ""
   },
 
   reducers: {
@@ -37,10 +38,14 @@ export default {
         })
       }
       return { ...state, Content: payload.list, Contentotal: payload.total }
+    },
+    getSel(state, { payload }) {
+      return { ...state, imgSrc: payload }
     }
   },
 
   effects: {
+
     *featchImg({ payload }, { call, put }) {
       const { data } = yield call(service.getBing)
       if (data.isok) {

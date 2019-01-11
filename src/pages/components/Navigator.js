@@ -18,7 +18,7 @@ class Page extends Component {
     resize = (e) => {
         if (document.body.offsetWidth < 1100) {
             this.props.dispatch({ type: "admin/changeColl", payload: { collapsed: true } })
-        }else{
+        } else {
             this.props.dispatch({ type: "admin/changeColl", payload: { collapsed: false } })
         }
 
@@ -44,23 +44,26 @@ class Page extends Component {
                         theme="dark"
                     >
                         {NavigaList.map((item) => {
-                            if (item.childrenNav.length) {
-                                return (
-                                    <SubMenu key={item.key} title={<span><Icon type={item.icon} /><span>{item.title}</span></span>}>
-                                        {item.childrenNav.map((cn) => (
-                                            <Menu.Item key={cn.key}>{cn.title}</Menu.Item>
-                                        ))}
-                                    </SubMenu>
-                                )
-                            } else {
-                                return (
-                                    <Menu.Item key={item.key}>
-                                        <Link to={item.path}>
-                                            <Icon type={item.icon} />
-                                            <span>{item.title}</span>
-                                        </Link>
-                                    </Menu.Item>
-                                )
+                            if (!item.show) {
+
+                                if (item.childrenNav.length) {
+                                    return (
+                                        <SubMenu key={item.key} title={<span><Icon type={item.icon} /><span>{item.title}</span></span>}>
+                                            {item.childrenNav.map((cn) => (
+                                                <Menu.Item key={cn.key}>{cn.title}</Menu.Item>
+                                            ))}
+                                        </SubMenu>
+                                    )
+                                } else {
+                                    return (
+                                        <Menu.Item key={item.key}>
+                                            <Link to={item.path}>
+                                                <Icon type={item.icon} />
+                                                <span>{item.title}</span>
+                                            </Link>
+                                        </Menu.Item>
+                                    )
+                                }
                             }
                         })}
 

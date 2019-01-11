@@ -1,9 +1,11 @@
 import { Component } from "react"
 import { connect } from "dva"
-import { Card, Icon, Row, Col } from 'antd';
+import { Card, Icon, Row, Col, Button } from 'antd';
 import Ellipsis from 'ant-design-pro/lib/Ellipsis';
 import styles from "./index.css"
-import Editor from "./components/Editor"
+import { routerRedux } from "dva/router"
+// import Editor from "./components/Editor"
+// import Link from "umi/link"
 const { Meta } = Card;
 class Page extends Component {
     state = { loading: false, }
@@ -16,12 +18,16 @@ class Page extends Component {
         await this.props.dispatch({ type: "admin/getContent", payload: { status: 1, pageindex: 1 } })
         await this.setState({ loading: false })
     }
+    handleShow = async (id) => {
+        // await this.props.dispatch({ type: "admin/getSel", payload: item })
+        this.props.dispatch(routerRedux.push({ pathname: '/Editor', query: { id } }));
+    }
     render() {
         const { loading } = this.state
-        const { Content, Contentotal, Tags } = this.props
+        const { Content, Contentotal } = this.props
         return (
             <div className="main">
-                <Editor Tags={Tags} type={false} />
+                <Button type="primary" onClick={() => this.handleShow("")} style={{ margin: 10 }}>添加文章</Button>
                 <Row type="flex">
                     {Content.length > 0 && Content.map((item) => (
                         <Col xs={24} lg={12} xl={8} xxl={6} key={item.id} style={{ padding: 10 }}>
@@ -30,7 +36,7 @@ class Page extends Component {
                                 bordered
                                 loading={loading}
                                 cover={!loading && <img alt="example" src={item.img} style={{ height: 250 }} />}
-                                actions={!loading && [<Editor Tags={Tags} ct={item} type={true} />, <a><Icon type="delete" />删除</a>]}
+                                actions={!loading && [<a onClick={() => this.handleShow(item.id)}><Icon type="edit" />编辑</a>, <a><Icon type="delete" />删除</a>]}
                             >
                                 <Meta
                                     title={item.title}
@@ -51,7 +57,7 @@ class Page extends Component {
     }
 }
 function mapStateToProps(state) {
-    const { Content, Contentotal, Tags } = state.admin
-    return { Content, Contentotal, Tags }
+    const { Content, Contentotal } = state.admin
+    return { Content, Contentotal }
 }
 export default connect(mapStateToProps)(Page)

@@ -18,14 +18,22 @@ const NavigaList = [
         title: "文章",
         path: "/content",
         childrenNav: [],
-        icon:"bars",
+        icon: "bars",
     },
     {
         key: "about",
         title: "关于我的",
         path: "/about",
         childrenNav: [],
-        icon:"user",
+        icon: "user",
     },
+    {
+        key: "addContent",
+        title: "编辑文章",
+        path: "/Editor",
+        childrenNav: [],
+        show: true
+    },
+
 ]
 export default NavigaList
