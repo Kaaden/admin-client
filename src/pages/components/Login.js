@@ -1,6 +1,7 @@
 import { Component } from "react"
 import { connect } from "dva"
 import { Form, Icon, Input, Button } from 'antd';
+import { formClick } from "../../utils/helper"
 import styles from "./Login.css"
 class Page extends Component {
   state = { loading: false }
@@ -9,11 +10,10 @@ class Page extends Component {
     const { form, dispatch } = this.props
     e.preventDefault();
     this.setState({ loading: true })
-    await form.validateFields((err, values) => {
-      if (!err) {
-        dispatch({ type: "admin/Login", payload: { ...values } })
-      }
-    });
+    let data = await formClick(form)
+    if (data) {
+      dispatch({ type: "admin/Login", payload: { ...data } })
+    }
     this.setState({ loading: false })
   }
   render() {

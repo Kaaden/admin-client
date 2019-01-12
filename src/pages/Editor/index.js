@@ -2,7 +2,8 @@ import "braft-editor/dist/index.css"
 import { Component } from "react"
 import { connect } from "dva"
 import BraftEditor from "braft-editor"
-import { Form, Input, Button, Select, Spin, Upload,Icon } from "antd"
+import { ContentUtils } from "braft-utils"
+import { Form, Input, Button, Select, Spin, Upload, Icon } from "antd"
 import UploadComponents from "../components/Upload"
 import { routerRedux } from "dva/router"
 import { formClick } from "../../utils/helper"
@@ -15,8 +16,7 @@ const formItemLayout = {
     wrapperCol: { span: 16 },
     colon: false,
 }
-const controls = ["bold", "italic", "underline", "text-color", "separator", "link", "separator", "font-family", "font-size", "line-height"]
-
+const excludeControls = ['emoji', 'media']
 class Editor extends Component {
     state = { imgSrc: "", loading: false, btnloading: false }
     async componentDidMount() {
@@ -51,12 +51,11 @@ class Editor extends Component {
         let data = await formClick(form)
         if (data) {
             data.content = data.content.toHTML()
-            console.log(data)
-            // if (id) {
-            //     data.id = id
-            // }
-            // dispatch({ type: "admin/addContent", payload: data })
-            // this.handleCancle()
+            if (id) {
+                data.id = id
+            }
+            dispatch({ type: "admin/addContent", payload: data })
+            this.handleCancle()
         }
         await this.setState({ btnloading: false })
     }
@@ -64,8 +63,16 @@ class Editor extends Component {
         this.props.dispatch(routerRedux.push({ pathname: '/content' }));
         this.props.dispatch({ type: "admin/getSel", payload: true })
     }
-    handleChange=(info)=>{
-        console.log(info)
+    handleChange = (info) => {
+        const { file } = info
+        if (file.status === "done") {
+            this.props.form.setFieldsValue({
+                content: ContentUtils.insertMedias(this.props.form.getFieldValue("content"), [{
+                    type: "IMAGE",
+                    url: "http://127.0.0.1:80" + file.response.url,
+                }]),
+            })
+        }
     }
     render() {
         const { loading, imgSrc, btnloading } = this.state
@@ -76,13 +83,13 @@ class Editor extends Component {
                 key: "antd-uploader",
                 type: "component",
                 component: (
-                    
+
                     <Upload
                         action="http://127.0.0.1:80/upload"
                         onChange={this.handleChange}
                         showUploadList={false}
                     >
-                         <button
+                        <button
                             type="button"
                             className="control-item button upload-button"
                             data-title="插入图片"
@@ -136,7 +143,7 @@ class Editor extends Component {
                             })(
                                 <BraftEditor
                                     style={{ border: '1px solid #d9d9d9', borderRadius: "4px" }}
-                                    controls={controls}
+                                    excludeControls={excludeControls}
                                     extendControls={extendControls}
                                 />
                             )}
