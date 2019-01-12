@@ -2,9 +2,10 @@ import "braft-editor/dist/index.css"
 import { Component } from "react"
 import { connect } from "dva"
 import BraftEditor from "braft-editor"
-import { Form, Input, Button, Select, Spin } from "antd"
-import Upload from "../components/Upload"
+import { Form, Input, Button, Select, Spin, Upload,Icon } from "antd"
+import UploadComponents from "../components/Upload"
 import { routerRedux } from "dva/router"
+import { formClick } from "../../utils/helper"
 import axios from "axios"
 import qs from "qs";
 const Option = Select.Option;
@@ -14,17 +15,16 @@ const formItemLayout = {
     wrapperCol: { span: 16 },
     colon: false,
 }
-const controls = ["bold", "italic", "underline", "text-color", "separator", "link", "separator", "font-family", "font-size", "line-height", "media"]
+const controls = ["bold", "italic", "underline", "text-color", "separator", "link", "separator", "font-family", "font-size", "line-height"]
 
 class Editor extends Component {
-    state = { imgSrc: "", loading: false }
+    state = { imgSrc: "", loading: false, btnloading: false }
     async componentDidMount() {
         const { Tags, dispatch, history, form } = this.props
         const { id } = history.location.query
         if (Tags.length === 0) {
             dispatch({ type: "admin/getTags" })
         }
-        this.props.dispatch({ type: "admin/featchImg" })
         await dispatch({ type: "admin/getSel", payload: false })
         await this.setState({ loading: true })
         if (id) {
@@ -38,34 +38,61 @@ class Editor extends Component {
                     category: data.data.category
                 }
                 form.setFieldsValue({ ...value })
+
             }
         }
         await this.setState({ loading: false })
     }
-    componentWillUnmount() {
-        this.props.dispatch({ type: "admin/getSel", payload: true })
-    }
-    handleSubmit = (event) => {
+    handleSubmit = async (event) => {
         const { dispatch, history, form } = this.props
         const { id } = history.location.query
         event.preventDefault()
-        form.validateFields((error, values) => {
-            if (!error) {
-                values.content = values.content.toHTML()
-                if (id) {
-                    values.id = id
-                }
-                dispatch({ type: "admin/addContent", payload: values })
-            }
-        })
+        await this.setState({ btnloading: true })
+        let data = await formClick(form)
+        if (data) {
+            data.content = data.content.toHTML()
+            console.log(data)
+            // if (id) {
+            //     data.id = id
+            // }
+            // dispatch({ type: "admin/addContent", payload: data })
+            // this.handleCancle()
+        }
+        await this.setState({ btnloading: false })
     }
     handleCancle = async () => {
         this.props.dispatch(routerRedux.push({ pathname: '/content' }));
+        this.props.dispatch({ type: "admin/getSel", payload: true })
+    }
+    handleChange=(info)=>{
+        console.log(info)
     }
     render() {
-        const { loading, imgSrc } = this.state
+        const { loading, imgSrc, btnloading } = this.state
         const { Tags, form } = this.props
         const { getFieldDecorator } = form
+        const extendControls = [
+            {
+                key: "antd-uploader",
+                type: "component",
+                component: (
+                    
+                    <Upload
+                        action="http://127.0.0.1:80/upload"
+                        onChange={this.handleChange}
+                        showUploadList={false}
+                    >
+                         <button
+                            type="button"
+                            className="control-item button upload-button"
+                            data-title="插入图片"
+                        >
+                            <Icon type="picture" />
+                        </button>
+                    </Upload>
+                ),
+            },
+        ]
         return (
             <div className="main" style={{ padding: "30px 0 0 0" }}>
                 <Spin spinning={loading}>
@@ -89,7 +116,7 @@ class Editor extends Component {
                         </FormItem>
                         <FormItem {...formItemLayout} label="封面图片">
                             {getFieldDecorator("img")(
-                                <Upload img={imgSrc} />
+                                <UploadComponents img={imgSrc} />
                             )}
                         </FormItem>
                         <FormItem {...formItemLayout} label="选择分类">
@@ -110,13 +137,12 @@ class Editor extends Component {
                                 <BraftEditor
                                     style={{ border: '1px solid #d9d9d9', borderRadius: "4px" }}
                                     controls={controls}
-                                    onChange={this.handleEditorChange}
-                                    onSave={this.submitContent}
+                                    extendControls={extendControls}
                                 />
                             )}
                         </FormItem>
                         <FormItem wrapperCol={{ span: 12, offset: 4 }}>
-                            <Button type="primary" htmlType="submit" style={{ marginRight: 16, width: 100 }}>完成</Button>
+                            <Button loading={btnloading} type="primary" htmlType="submit" style={{ marginRight: 16, width: 100 }}>完成</Button>
                             <Button style={{ backgroundColor: "#002140", borderColor: "#002140", width: 100, color: "#fff" }} onClick={this.handleCancle} >返回</Button>
                         </FormItem>
                     </Form>

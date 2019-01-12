@@ -88,7 +88,11 @@ export default {
     },
     *addContent({ payload }, { call, put }) {
       const { data } = yield call(service.addContent, { ...payload })
-      console.log(data)
+      if (data.isok) {
+        return message.success(data.msg)
+      } else {
+        return message.error(data.msg)
+      }
     }
   },
 
