@@ -24,6 +24,11 @@ class Page extends Component {
             }
         }
     }
+    componentWillUnmount() {
+        this.setState = (state, callback) => {
+            return;
+        };
+    }
 
     handleChange = (info) => {
         let { file } = info

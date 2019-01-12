@@ -3,7 +3,7 @@ import { Component } from "react"
 import { connect } from "dva"
 import BraftEditor from "braft-editor"
 import { ContentUtils } from "braft-utils"
-import { Form, Input, Button, Select, Spin, Upload, Icon } from "antd"
+import { Form, Input, Button, Select, Spin, Upload, Icon, message } from "antd"
 import UploadComponents from "../components/Upload"
 import { routerRedux } from "dva/router"
 import { formClick } from "../../utils/helper"
@@ -54,14 +54,16 @@ class Editor extends Component {
             if (id) {
                 data.id = id
             }
-            dispatch({ type: "admin/addContent", payload: data })
+            let isok = await dispatch({ type: "admin/addContent", payload: data })
+            isok ? message.success("success") : message.error("faile")
             this.handleCancle()
         }
         await this.setState({ btnloading: false })
     }
     handleCancle = async () => {
-        this.props.dispatch(routerRedux.push({ pathname: '/content' }));
-        this.props.dispatch({ type: "admin/getSel", payload: true })
+        const { dispatch } = this.props
+        await dispatch({ type: "admin/getSel", payload: true })
+        dispatch(routerRedux.push({ pathname: '/content' }));
     }
     handleChange = (info) => {
         const { file } = info

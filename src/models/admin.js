@@ -11,8 +11,6 @@ export default {
     collapsed: false,
     Tags: [],
     Tagstotal: 0,
-    Content: [],
-    Contentotal: 0,
     navtive: true,
   },
 
@@ -30,15 +28,7 @@ export default {
     saveTags(state, { payload }) {
       return { ...state, Tags: payload.list, Tagstotal: payload.total }
     },
-    saveContent(state, { payload }) {
-      if (payload.list.length) {
-        payload.list.map((item) => {
-          item.content = item.content.replace(/<[^>]+>/g, "")
-          item.content = item.content.replace(/↵/g, "");
-        })
-      }
-      return { ...state, Content: payload.list, Contentotal: payload.total }
-    },
+
     getSel(state, { payload }) {
       return { ...state, navtive: payload }
     }
@@ -78,22 +68,15 @@ export default {
         return message.error(data.msg)
       }
     },
-    *getContent({ payload }, { call, put }) {
-      const { data } = yield call(service.getContent, { ...payload })
-      if (data.isok) {
-        yield put({ type: "saveContent", payload: { list: data.list, total: data.total } })
-      } else {
-        return message.error(data.msg)
-      }
-    },
+
     *addContent({ payload }, { call, put }) {
       const { data } = yield call(service.addContent, { ...payload })
-      if (data.isok) {
-        return message.success(data.msg)
-      } else {
-        return message.error(data.msg)
-      }
-    }
+      return data.isok
+    },
+    * delContent({ payload }, { call, put }) {
+      const { data } = yield call(service.delContent, { ...payload })
+      return data.isok
+    },
   },
 
 

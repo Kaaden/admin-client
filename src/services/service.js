@@ -38,18 +38,19 @@ export function DelTags(body) {
     data: qs.stringify(body),
   })
 }
-export function getContent(body) {
-  return request({
-    method: "post",
-    url: `${host}/getContent`,
-    data: qs.stringify(body),
-  })
-} 
+
 
 export function addContent(body) {
   return request({
     method: "post",
     url: `${host}/addContent`,
+    data: qs.stringify(body),
+  })
+}
+export function delContent(body){
+  return request({
+    method: "post",
+    url: `${host}/delContent`,
     data: qs.stringify(body),
   })
 }

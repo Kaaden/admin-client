@@ -161,3 +161,7 @@ td, :global(#root) {
   border-radius: 2em;
   background-color: rgba(0, 0, 0, 0.15);
 }
+.demo-loading-container{
+  display: flex;
+  justify-content: center;
+}
