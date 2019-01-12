@@ -31,7 +31,8 @@ export default {
 
     getSel(state, { payload }) {
       return { ...state, navtive: payload }
-    }
+    },
+   
   },
 
   effects: {

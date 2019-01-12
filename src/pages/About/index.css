@@ -1,0 +1,63 @@
+.bannerContain{
+    width:100%;
+    height:300px;
+    display:flex;
+    align-items:center; 
+    justify-content:center;
+    border-radius: 5px;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    background-size:100%;
+    position: relative;
+}
+.bannerBg{
+    width:100%;
+    height:100%;
+    background: rgba(0, 0, 0, 0.3)
+}
+.title{
+    position: absolute;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    font-weight: 600;
+    font-family: "beyno";
+    font-size: 50px;
+    color:#fff;
+    z-index: 3;
+}
+.mainContain{
+    width: 100%;
+    margin:30px auto;
+    position: relative;
+}
+.mainlogo{
+    flex-shrink: 0;
+    margin-right: 30px;
+}
+.mainbox{
+    border-radius: 5px;
+    
+    box-shadow: 0 0 10px rgb(175, 182, 189);
+    padding:20px;
+}
+:global(#desc .antd-pro-description-list-title){
+    font-size: 22px;
+    font-weight: bold;
+}
+:global(#desc .ant-row .ant-col-xs-24){
+    margin-bottom: 20px
+}
+:global(#desc .ant-row .ant-col-xs-24:last-child){
+    margin-bottom: 0
+}
+:global(#desc .ant-row .ant-col-xs-24 .antd-pro-description-list-term){
+    font-size: 20px;
+    font-weight: 550;
+    margin-bottom: 20px;
+}
+:global(#desc .ant-row .ant-col-xs-24 .antd-pro-description-list-detail){
+    line-height: 1.8;
+    text-indent:2em;
+    font-size: 16px;
+}

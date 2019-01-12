@@ -1,7 +1,7 @@
 import { Component } from "react"
 import { connect } from "dva"
 import styles from "./Header.css"
-import { Menu, Icon, Badge, Dropdown, Button } from 'antd';
+import { Menu, Icon, Dropdown, Button, Avatar } from 'antd';
 import { routerRedux } from "dva/router"
 class Page extends Component {
     state = {}
@@ -31,8 +31,8 @@ class Page extends Component {
     }
     render() {
         const { collapsed, auth, navtive } = this.props
-        let auther = window.sessionStorage.getItem("auth")
         let user
+        let auther = window.sessionStorage.getItem("auth")
         if (auther) {
             user = auth || JSON.parse(auther)
         }
@@ -42,8 +42,9 @@ class Page extends Component {
                     <Button style={{ backgroundColor: "#002140", borderColor: "#002140" }} icon="left" onClick={this.handleCancle} type="primary" >返回</Button>}
                 {!navtive && <div className={styles.title}>KAADEN</div>}
                 <Dropdown overlay={this.menu} trigger={['hover']}>
-                    <div className={styles.menu} >
-                        <Badge status="success" text={user.username} />
+                    <div className={styles.menu + " f fc"} >
+                        <Avatar icon="user" src={user.logo} size="large" />
+                        <span style={{ marginLeft: 10 }}>{user.username}</span>
                     </div>
                 </Dropdown>
             </div>

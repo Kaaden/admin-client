@@ -47,7 +47,7 @@ export function addContent(body) {
     data: qs.stringify(body),
   })
 }
-export function delContent(body){
+export function delContent(body) {
   return request({
     method: "post",
     url: `${host}/delContent`,
