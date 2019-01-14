@@ -10,6 +10,11 @@ import styles from "./index.css"
 class Layout extends Component {
     componentDidMount() {
         document.title = "Kaaden Admin"
+        let link = document.querySelector("link[rel*='icon']") || document.createElement("link")
+        link.type = "image/x-icon"
+        link.rel = "shortcut icon"
+        link.href = "http://kaaden.orrzt.com/public/logo.jpg"
+        document.getElementsByTagName("head")[0].appendChild(link)
         const { history } = this.props
         let auth = window.sessionStorage.getItem("auth")
         if (!auth) {
