@@ -1,8 +1,8 @@
 import request from '../utils/request';
 import qs from "qs";
-const addr = "http://127.0.0.1:80"
-// const addr_service = "http://kaaden.orrzt.com"
-const host = addr;
+// const addr = "http://127.0.0.1:80"
+const addr_service = "http://kaaden.orrzt.com"
+const host = addr_service;
 export function getBing(body) {
   return request({
     method: "post",
@@ -51,6 +51,13 @@ export function delContent(body) {
   return request({
     method: "post",
     url: `${host}/delContent`,
+    data: qs.stringify(body),
+  })
+}
+export function updateUser(body) {
+  return request({
+    method: "post",
+    url: `${host}/updateUser`,
     data: qs.stringify(body),
   })
 }

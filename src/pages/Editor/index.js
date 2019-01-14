@@ -28,7 +28,7 @@ class Editor extends Component {
         await dispatch({ type: "admin/getSel", payload: false })
         await this.setState({ loading: true })
         if (id) {
-            let { data } = await axios.post("http://127.0.0.1:80/getEditor", qs.stringify({ id }))
+            let { data } = await axios.post("http://kaaden.orrzt.com/getEditor", qs.stringify({ id }))
             if (data.isok) {
                 await this.setState({ imgSrc: data.data.img })
                 let value = {
@@ -71,7 +71,7 @@ class Editor extends Component {
             this.props.form.setFieldsValue({
                 content: ContentUtils.insertMedias(this.props.form.getFieldValue("content"), [{
                     type: "IMAGE",
-                    url: "http://127.0.0.1:80" + file.response.url,
+                    url: "http://kaaden.orrzt.com" + file.response.url,
                 }]),
             })
         }
@@ -87,7 +87,7 @@ class Editor extends Component {
                 component: (
 
                     <Upload
-                        action="http://127.0.0.1:80/upload"
+                        action="http://kaaden.orrzt.com/upload"
                         onChange={this.handleChange}
                         showUploadList={false}
                     >

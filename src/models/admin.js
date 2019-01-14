@@ -32,7 +32,7 @@ export default {
     getSel(state, { payload }) {
       return { ...state, navtive: payload }
     },
-   
+
   },
 
   effects: {
@@ -78,6 +78,13 @@ export default {
       const { data } = yield call(service.delContent, { ...payload })
       return data.isok
     },
+    * updateUSER({ payload }, { call, put }) {
+      const { data } = yield call(service.updateUser, { ...payload })
+      if(data.isok){
+        window.sessionStorage.setItem("auth", JSON.stringify(data.info))
+        yield put({ type: "saveLogin", payload: data.info })
+      }
+    }
   },
 
 

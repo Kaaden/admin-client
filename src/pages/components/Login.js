@@ -27,7 +27,7 @@ class Page extends Component {
             {getFieldDecorator('user', {
               rules: [{ required: true, message: '请输入账号!' }],
             })(
-              <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="userName" />
+              <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="userName" ref={this.titleIpt = (titleIpt) => titleIpt && titleIpt.focus()}/>
             )}
           </Form.Item>
           <Form.Item style={{ width: "100%" }}>

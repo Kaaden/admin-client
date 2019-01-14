@@ -12,7 +12,13 @@ class Page extends Component {
     state = {
         loading: false,
     }
+    componentDidMount() {
+        this.getImg()
+    }
     componentDidUpdate() {
+        this.getImg()
+    }
+    getImg = () => {
         const { img } = this.props
         if (preImg !== img) {
             preImg = img
@@ -36,7 +42,7 @@ class Page extends Component {
             this.setState({ loading: true })
         }
         if (file.status === "done") {
-            let imageUrl = "http://127.0.0.1:80" + file.response.url
+            let imageUrl = "http://kaaden.orrzt.com" + file.response.url
             this.setState({ loading: false, imageUrl })
             this.triggerChange(imageUrl)
         }
@@ -56,7 +62,7 @@ class Page extends Component {
                 listType="picture-card"
                 className="avatar-uploader"
                 showUploadList={false}
-                action="http://127.0.0.1:80/upload"
+                action="http://kaaden.orrzt.com/upload"
                 onChange={this.handleChange}
             >
                 {imageUrl ? <img style={{ width: "100%" }} src={imageUrl} alt="avatar" /> : <Icon type={loading ? 'loading' : 'plus'} />}

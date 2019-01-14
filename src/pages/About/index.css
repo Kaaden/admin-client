@@ -37,7 +37,9 @@
 }
 .mainbox{
     border-radius: 5px;
-    
+    max-height: 415px;
+    overflow-x: hidden;
+    overflow-y: scroll;
     box-shadow: 0 0 10px rgb(175, 182, 189);
     padding:20px;
 }

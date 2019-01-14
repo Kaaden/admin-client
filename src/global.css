@@ -165,3 +165,6 @@ td, :global(#root) {
   display: flex;
   justify-content: center;
 }
+:global(.ant-upload.ant-upload-select-picture-card){
+  margin:0;
+}

@@ -20,9 +20,9 @@ class Page extends Component {
             <Menu.Item key="0">
                 <a onClick={this.quit}>退出</a>
             </Menu.Item>
-            <Menu.Item key="1">
+            {/* <Menu.Item key="1">
                 <a href="http://www.taobao.com/">修改密码</a>
-            </Menu.Item>
+            </Menu.Item> */}
         </Menu>
     );
     handleCancle = () => {
@@ -44,7 +44,7 @@ class Page extends Component {
                 <Dropdown overlay={this.menu} trigger={['hover']}>
                     <div className={styles.menu + " f fc"} >
                         <Avatar icon="user" src={user.logo} size="large" />
-                        <span style={{ marginLeft: 10 }}>{user.username}</span>
+                        <span style={{ marginLeft: 10 }}>{user.user}</span>
                     </div>
                 </Dropdown>
             </div>
