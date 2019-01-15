@@ -17,7 +17,7 @@ class Page extends Component {
     }
     componentDidUpdate() {
         const { visible } = this.props
-        if (!visible) {
+        if (visible !== undefined && !visible) {
             preImg = ""
             return
         }
