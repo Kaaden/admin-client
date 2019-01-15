@@ -16,10 +16,15 @@ class Page extends Component {
         this.getImg()
     }
     componentDidUpdate() {
+        const { visible } = this.props
+        if (!visible) {
+            preImg = ""
+            return
+        }
         this.getImg()
     }
     getImg = () => {
-        const { img } = this.props
+        const { img, } = this.props
         if (preImg !== img) {
             preImg = img
             if (img) {
@@ -31,6 +36,7 @@ class Page extends Component {
         }
     }
     componentWillUnmount() {
+        preImg = ""
         this.setState = (state, callback) => {
             return;
         };

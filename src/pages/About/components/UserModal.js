@@ -62,7 +62,7 @@ class UserModal extends Component {
                         <FormItem {...formItemLayout} label="头像">
                             <div style={{ width: 100 }}>
                                 {getFieldDecorator("logo")(
-                                    <Upload img={user && user.logo} />
+                                    <Upload img={user && user.logo} visible={visible} />
                                 )}
                             </div>
                         </FormItem>
