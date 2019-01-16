@@ -86,7 +86,7 @@ class Page extends Component {
                                     <Card
                                         hoverable
                                         bordered
-                                        cover={<img alt="example" src={item.img} style={{ height: 250 }} />}
+                                        cover={<div alt="example" style={{ height: 250, backgroundRepeat: "no-repeat", backgroundSize: "cover", backgroundImage: `url(${item.img})` }} />}
                                         actions={[<a onClick={() => this.handleShow(item.id)}><Icon type="edit" />编辑</a>, <Popconfirm title="确认删除这篇文章" onConfirm={() => this.confirm(item.id)} okText="删除" cancelText="取消">
                                             <a><Icon type="delete" />删除</a>
                                         </Popconfirm>]}
