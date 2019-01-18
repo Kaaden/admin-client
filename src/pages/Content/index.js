@@ -42,6 +42,7 @@ class Page extends Component {
         }
     }
     handleShow = (id) => {
+
         this.props.dispatch(routerRedux.push({ pathname: '/Editor', query: { id } }));
     }
     confirm = async (id) => {
