@@ -25,12 +25,12 @@ class Editor extends Component {
         if (Tags.length === 0) {
             dispatch({ type: "admin/getTags" })
         }
-        await dispatch({ type: "admin/getSel", payload: false })
-        await this.setState({ loading: true })
+        dispatch({ type: "admin/getSel", payload: false })
+        this.setState({ loading: true })
         if (id) {
             let { data } = await axios.post("http://kaaden.orrzt.com/getEditor", qs.stringify({ id }))
             if (data.isok) {
-                await this.setState({ imgSrc: data.data.img })
+                this.setState({ imgSrc: data.data.img })
                 let value = {
                     title: data.data.title,
                     content: BraftEditor.createEditorState(data.data.content),
@@ -41,7 +41,7 @@ class Editor extends Component {
 
             }
         }
-        await this.setState({ loading: false })
+        this.setState({ loading: false })
     }
     handleSubmit = async (event) => {
         const { dispatch, history, form } = this.props
