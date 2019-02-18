@@ -34,6 +34,13 @@ const NavigaList = [
         childrenNav: [],
         show: true
     },
+    {
+        key: "conFig",
+        title: "页面配置",
+        path: "/Config",
+        icon: "desktop",
+        childrenNav: [],
+    },
 
 ]
 export default NavigaList

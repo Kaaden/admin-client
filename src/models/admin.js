@@ -12,6 +12,7 @@ export default {
     Tags: [],
     Tagstotal: 0,
     navtive: true,
+    config: "",
   },
 
   reducers: {
@@ -35,6 +36,9 @@ export default {
     getSel(state, { payload }) {
       return { ...state, navtive: payload }
     },
+    saveConfig(state, { payload }) {
+      return { ...state, config: payload }
+    }
 
   },
 
@@ -87,7 +91,13 @@ export default {
         window.sessionStorage.setItem("auth", JSON.stringify(data.info))
         yield put({ type: "saveLogin", payload: data.info })
       }
-    }
+    },
+    * getConfig({ payload }, { call, put }) {
+      const { data } = yield call(service.getConfig, { ...payload })
+      if (data.isok) {
+        yield put({ type: "saveConfig", payload: data.data })
+      }
+    },
   },
 
 
