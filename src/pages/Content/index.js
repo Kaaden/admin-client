@@ -9,35 +9,25 @@ import axios from "axios"
 import qs from "qs";
 const { Meta } = Card;
 class Page extends Component {
-    state = { loading: false, hasMore: true, list: [], pageindex: 0, hasLoad: false }
+    state = { loading: false,  list: [], pageindex: 0, hasLoad: true }
     // componentDidMount() {
     //     this.handleInfiniteOnLoad()
     // }
     handleInfiniteOnLoad = async () => {
-        let { list,  pageindex, hasLoad } = this.state
+        let { list, pageindex } = this.state
         this.setState({ loading: true })
-        if (hasLoad) {
-            return
-        }
-        // if (total && total === list.length) {
-        //     this.setState({
-        //         hasMore: false,
-        //         loading: false,
-        //         hasLoad: true,
-        //     });
-        //     return
-        // }
+
         pageindex = pageindex + 1
-        let { data } = await axios.post("http://127.0.0.1:80/getContent", qs.stringify({ status: 1, pageindex }))
+        let { data } = await axios.post("http://kaaden.orrzt.com/getContent", qs.stringify({ status: 1, pageindex }))
         if (data.isok) {
             await this.setState({
                 list: [...list, ...data.list],
                 pageindex,
                 loading: false,
-                hasLoad: false
+                hasLoad: true
             })
         } else {
-            this.setState({ loading: false, hasLoad: true })
+            this.setState({ loading: false, hasLoad: false })
         }
     }
     handleShow = (id) => {
@@ -63,14 +53,14 @@ class Page extends Component {
         }
     }
     render() {
-        const { loading, hasMore, list } = this.state
+        const { loading, hasLoad, list } = this.state
         return (
             <div className="main">
                 <Button type="primary" onClick={() => this.handleShow("")} style={{ marginBottom: 20 }}>添加文章</Button>
                 <InfiniteScroll
                     // initialLoad={false}
                     loadMore={this.handleInfiniteOnLoad}
-                    hasMore={!loading && hasMore}
+                    hasMore={!loading && hasLoad}
                     useWindow={false}
                 >
                     <List
@@ -110,7 +100,7 @@ class Page extends Component {
                         }}
                     >
 
-                        {loading && hasMore && (
+                        {loading && hasLoad && (
                             <div className="demo-loading-container">
                                 <Spin />
                             </div>
