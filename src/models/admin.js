@@ -6,7 +6,7 @@ export default {
   namespace: 'admin',
 
   state: {
-    logoImg: "",
+    logoImg: window.sessionStorage.getItem("logoImg") || "",
     auth: "",
     collapsed: false,
     Tags: [],
@@ -20,6 +20,9 @@ export default {
       return { ...state, auth }
     },
     saveImg(state, { payload }) {
+      if (payload) {
+        window.sessionStorage.setItem("logoImg", payload)
+      }
       return { ...state, logoImg: payload };
     },
     changeColl(state, { payload }) {
@@ -80,7 +83,7 @@ export default {
     },
     * updateUSER({ payload }, { call, put }) {
       const { data } = yield call(service.updateUser, { ...payload })
-      if(data.isok){
+      if (data.isok) {
         window.sessionStorage.setItem("auth", JSON.stringify(data.info))
         yield put({ type: "saveLogin", payload: data.info })
       }

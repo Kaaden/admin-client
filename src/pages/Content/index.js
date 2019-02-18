@@ -10,9 +10,6 @@ import qs from "qs";
 const { Meta } = Card;
 class Page extends Component {
     state = { loading: false,  list: [], pageindex: 0, hasLoad: true }
-    // componentDidMount() {
-    //     this.handleInfiniteOnLoad()
-    // }
     handleInfiniteOnLoad = async () => {
         let { list, pageindex } = this.state
         this.setState({ loading: true })
@@ -58,7 +55,7 @@ class Page extends Component {
             <div className="main">
                 <Button type="primary" onClick={() => this.handleShow("")} style={{ marginBottom: 20 }}>添加文章</Button>
                 <InfiniteScroll
-                    // initialLoad={false}
+                    initialLoad={true}
                     loadMore={this.handleInfiniteOnLoad}
                     hasMore={!loading && hasLoad}
                     useWindow={false}

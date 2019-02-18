@@ -10,17 +10,15 @@ import styles from "./index.css"
 class Layout extends Component {
     componentDidMount() {
         document.title = "Kaaden Admin"
+        const { history } = this.props
         let link = document.querySelector("link[rel*='icon']") || document.createElement("link")
         link.type = "image/x-icon"
         link.rel = "shortcut icon"
         link.href = "http://kaaden.orrzt.com/public/logo.jpg"
         document.getElementsByTagName("head")[0].appendChild(link)
-        const { history } = this.props
-        let auth = window.sessionStorage.getItem("auth")
-        // if (!auth) {
-        //     history.push("/")
-        // }
-        this.props.dispatch({ type: "admin/featchImg" })
+        if (history.location.pathname === "/about" || history.location.pathname === "/home") {
+            this.props.dispatch({ type: "admin/featchImg" })
+        }
     }
     render() {
         let showClient = true

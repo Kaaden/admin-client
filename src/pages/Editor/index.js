@@ -33,6 +33,7 @@ class Editor extends Component {
                 this.setState({ imgSrc: data.data.img })
                 let value = {
                     title: data.data.title,
+                    description:data.data.description,
                     content: BraftEditor.createEditorState(data.data.content),
                     authors: data.data.authors,
                     category: data.data.category
@@ -47,7 +48,7 @@ class Editor extends Component {
         const { dispatch, history, form } = this.props
         const { id } = history.location.query
         event.preventDefault()
-        await this.setState({ btnloading: true })
+        this.setState({ btnloading: true })
         let data = await formClick(form)
         if (data) {
             data.content = data.content.toHTML()
@@ -58,11 +59,11 @@ class Editor extends Component {
             isok ? message.success("success") : message.error("faile")
             this.handleCancle()
         }
-        await this.setState({ btnloading: false })
+        this.setState({ btnloading: false })
     }
-    handleCancle = async () => {
+    handleCancle = () => {
         const { dispatch } = this.props
-        await dispatch({ type: "admin/getSel", payload: true })
+        dispatch({ type: "admin/getSel", payload: true })
         dispatch(routerRedux.push({ pathname: '/content' }));
     }
     handleChange = (info) => {
@@ -123,6 +124,15 @@ class Editor extends Component {
                                 <Input placeholder="请输入作者" />
                             )}
                         </FormItem>
+
+                        <FormItem {...formItemLayout} label="文章简介">
+                            {getFieldDecorator("description", {
+                                rules: [{ required: true, message: "请输入文章简介" }],
+                            })(
+                                <Input placeholder="请输入文章简介" />
+                            )}
+                        </FormItem>
+
                         <FormItem {...formItemLayout} label="封面图片">
                             {getFieldDecorator("img")(
                                 <UploadComponents img={imgSrc} />
