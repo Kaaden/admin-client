@@ -9,31 +9,30 @@ import axios from "axios"
 import qs from "qs";
 const { Meta } = Card;
 class Page extends Component {
-    state = { loading: false, hasMore: true, list: [], total: 0, pageindex: 0, hasLoad: false }
-    componentDidMount() {
-        this.handleInfiniteOnLoad()
-    }
+    state = { loading: false, hasMore: true, list: [], pageindex: 0, hasLoad: false }
+    // componentDidMount() {
+    //     this.handleInfiniteOnLoad()
+    // }
     handleInfiniteOnLoad = async () => {
-        let { list, total, pageindex, hasLoad } = this.state
-        await this.setState({ loading: true })
+        let { list,  pageindex, hasLoad } = this.state
+        this.setState({ loading: true })
         if (hasLoad) {
             return
         }
-        if (total && total === list.length) {
-            this.setState({
-                hasMore: false,
-                loading: false,
-                hasLoad: true,
-            });
-            return
-        }
+        // if (total && total === list.length) {
+        //     this.setState({
+        //         hasMore: false,
+        //         loading: false,
+        //         hasLoad: true,
+        //     });
+        //     return
+        // }
         pageindex = pageindex + 1
         let { data } = await axios.post("http://127.0.0.1:80/getContent", qs.stringify({ status: 1, pageindex }))
         if (data.isok) {
             await this.setState({
                 list: [...list, ...data.list],
                 pageindex,
-                total: data.total,
                 loading: false,
                 hasLoad: false
             })
@@ -42,8 +41,12 @@ class Page extends Component {
         }
     }
     handleShow = (id) => {
-
-        this.props.dispatch(routerRedux.push({ pathname: '/Editor', query: { id } }));
+        const { dispatch } = this.props
+        if (id) {
+            dispatch(routerRedux.push({ pathname: '/Editor', query: { id } }));
+        } else {
+            dispatch(routerRedux.push({ pathname: '/Editor' }));
+        }
     }
     confirm = async (id) => {
         const { dispatch } = this.props
@@ -65,8 +68,7 @@ class Page extends Component {
             <div className="main">
                 <Button type="primary" onClick={() => this.handleShow("")} style={{ marginBottom: 20 }}>添加文章</Button>
                 <InfiniteScroll
-                    initialLoad={false}
-                    pageStart={0}
+                    // initialLoad={false}
                     loadMore={this.handleInfiniteOnLoad}
                     hasMore={!loading && hasMore}
                     useWindow={false}

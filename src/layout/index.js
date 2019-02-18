@@ -17,9 +17,9 @@ class Layout extends Component {
         document.getElementsByTagName("head")[0].appendChild(link)
         const { history } = this.props
         let auth = window.sessionStorage.getItem("auth")
-        if (!auth) {
-            history.push("/")
-        }
+        // if (!auth) {
+        //     history.push("/")
+        // }
         this.props.dispatch({ type: "admin/featchImg" })
     }
     render() {
