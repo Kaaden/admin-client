@@ -61,9 +61,16 @@ export function updateUser(body) {
     data: qs.stringify(body),
   })
 }
-export function getConfig(body){
+export function getConfig(body) {
   return request({
-    method:"post",
-    url:`${host}/getConfig`
+    method: "post",
+    url: `${host}/getConfig`
+  })
+}
+export function updateConfig(body) {
+  return request({
+    method: "post",
+    url: `${host}/updateConfig`,
+    data: qs.stringify(body),
   })
 }

@@ -98,6 +98,12 @@ export default {
         yield put({ type: "saveConfig", payload: data.data })
       }
     },
+    * updateConfig({ payload }, { call, put }) {
+      const { data } = yield call(service.updateConfig, { ...payload })
+      if(data.isok){
+        yield put({ type: "saveConfig", payload: data.data })
+      }
+    },
   },
 
 

@@ -3,16 +3,47 @@ import { connect } from "dva"
 import styles from "./index.css"
 import Modals from "./components/Modals"
 class Page extends Component {
-    state = { visible: true }
+    state = { visible: false, target: "", value: "" }
     componentDidMount() {
         this.props.dispatch({ type: "admin/getConfig" })
     }
+    handle = (target, e) => {
+        let { config } = this.props
+        let value = ""
+        switch (target) {
+            case "home":
+                value = {
+                    title: e.hometitle,
+                    titleLevel: e.homelevel,
+                }
+                break;
+            case "about":
+                value = {
+                    title: e.aboutitle,
+                    titleLevel: e.aboutlevel,
+                    img: e.aboutImg
+                }
+                break;
+            default:
+                value = {
+                    title: e.tagstitle,
+                    titleLevel: e.tagslevel,
+                    img: e.tagsImg
+                }
+                break;
+        }
+        value.id = config.id
+        this.setState({ visible: true, target, value })
+    }
+    handleCancle = () => {
+        this.setState({ visible: false, target: "", value: "" })
+    }
     render() {
-        const { visible } = this.state
+        const { visible, target, value } = this.state
         const { config, logoImg } = this.props
         return (
             <div className="main f fv fc">
-                <div className={styles.cardItem}>
+                <div className={styles.cardItem} onClick={() => this.handle("home", config)}>
                     <div className={styles.cardImg}>
                         <img src={logoImg} alt=""></img>
                     </div>
@@ -22,7 +53,7 @@ class Page extends Component {
                     </div>
                 </div>
 
-                <div className={styles.cardItem}>
+                <div className={styles.cardItem} onClick={() => this.handle("about", config)}>
                     <div className={styles.cardImg}>
                         <img src={config.aboutImg} alt=""></img>
                     </div>
@@ -32,7 +63,7 @@ class Page extends Component {
                     </div>
                 </div>
 
-                <div className={styles.cardItem}>
+                <div className={styles.cardItem} onClick={() => this.handle("tag", config)}>
                     <div className={styles.cardImg}>
                         <img src={config.tagsImg} alt=""></img>
                     </div>
@@ -41,7 +72,7 @@ class Page extends Component {
                         <span className={styles.cardLevel}>{config.tagslevel}</span>
                     </div>
                 </div>
-                <Modals visible={visible} />
+                <Modals visible={visible} value={value} target={target} handleCancle={this.handleCancle} />
             </div>
         )
     }

@@ -47,7 +47,7 @@ class UserModal extends Component {
         return (
             <div>
                 <Button type="primary" style={{ width: 300, height: 44 }} icon="edit" onClick={this.handleShow}>编辑</Button>
-                <Modal visible={visible} onCancel={this.handleCancle} footer={null} closable={false}>
+                <Modal visible={visible} footer={null} closable={false}  destroyOnClose={true}>
                     <Form onSubmit={this.handleSubmit}>
                         <FormItem {...formItemLayout} label="名称">
                             {getFieldDecorator("user", {
