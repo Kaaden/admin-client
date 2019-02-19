@@ -11,12 +11,13 @@ class Layout extends Component {
     componentDidMount() {
         document.title = "Kaaden Admin"
         const { history } = this.props
+        let path = history.location.pathname
         let link = document.querySelector("link[rel*='icon']") || document.createElement("link")
         link.type = "image/x-icon"
         link.rel = "shortcut icon"
         link.href = "http://kaaden.orrzt.com/public/logo.jpg"
         document.getElementsByTagName("head")[0].appendChild(link)
-        if (history.location.pathname === "/about" || history.location.pathname === "/home") {
+        if (path === "/about" || path === "/home" || path === "/") {
             this.props.dispatch({ type: "admin/featchImg" })
         }
     }

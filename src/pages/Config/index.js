@@ -1,36 +1,53 @@
 import { Component } from "react"
 import { connect } from "dva"
-import { Card, Icon, Avatar } from 'antd';
-const { Meta } = Card;
-
+import styles from "./index.css"
+import Modals from "./components/Modals"
 class Page extends Component {
-    state = {}
+    state = { visible: true }
     componentDidMount() {
         this.props.dispatch({ type: "admin/getConfig" })
     }
     render() {
-        const { config } = this.props
-        console.log(config)
+        const { visible } = this.state
+        const { config, logoImg } = this.props
         return (
-            <div className="main">
-                <Card
-                    style={{ width: 300 }}
-                    cover={<img alt="example" src={config.aboutImg || "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"} />}
-                    actions={[<Icon type="setting" />, <Icon type="edit" />, <Icon type="ellipsis" />]}
-                >
-                    <Meta
-                        // avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                        title={config.aboutitle || "Card title"}
-                        description={config.aboutlevel || "This is the description"}
-                    />
-                </Card>
+            <div className="main f fv fc">
+                <div className={styles.cardItem}>
+                    <div className={styles.cardImg}>
+                        <img src={logoImg} alt=""></img>
+                    </div>
+                    <div className={styles.cardMain}>
+                        <span className={styles.cardTitle}>{config.hometitle}</span>
+                        <span className={styles.cardLevel}>{config.homelevel}</span>
+                    </div>
+                </div>
 
+                <div className={styles.cardItem}>
+                    <div className={styles.cardImg}>
+                        <img src={config.aboutImg} alt=""></img>
+                    </div>
+                    <div className={styles.cardMain}>
+                        <span className={styles.cardTitle}>{config.aboutitle}</span>
+                        <span className={styles.cardLevel}>{config.aboutlevel}</span>
+                    </div>
+                </div>
+
+                <div className={styles.cardItem}>
+                    <div className={styles.cardImg}>
+                        <img src={config.tagsImg} alt=""></img>
+                    </div>
+                    <div className={styles.cardMain}>
+                        <span className={styles.cardTitle}>{config.tagstitle}</span>
+                        <span className={styles.cardLevel}>{config.tagslevel}</span>
+                    </div>
+                </div>
+                <Modals visible={visible} />
             </div>
         )
     }
 }
 function mapStateToProps(state) {
-    const { config } = state.admin
-    return { config }
+    const { config, logoImg } = state.admin
+    return { config, logoImg }
 }
 export default connect(mapStateToProps)(Page)

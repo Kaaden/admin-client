@@ -5,6 +5,6 @@ export default async function request (options) {
         response = await axios(options)
         return response
     } catch (err) {
-        return response
+        return {}
     }
 }

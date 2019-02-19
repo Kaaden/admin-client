@@ -12,7 +12,7 @@ class Page extends Component {
     this.setState({ loading: true })
     let data = await formClick(form)
     if (data) {
-      dispatch({ type: "admin/Login", payload: { ...data } })
+      await dispatch({ type: "admin/Login", payload: { ...data } })
     }
     this.setState({ loading: false })
   }
