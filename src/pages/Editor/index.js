@@ -7,8 +7,7 @@ import { Form, Input, Button, Select, Spin, Upload, Icon, message } from "antd"
 import UploadComponents from "../components/Upload"
 import { routerRedux } from "dva/router"
 import { formClick } from "../../utils/helper"
-import axios from "axios"
-import qs from "qs";
+
 const Option = Select.Option;
 const FormItem = Form.Item
 const formItemLayout = {
@@ -22,24 +21,23 @@ class Editor extends Component {
     async componentDidMount() {
         const { Tags, dispatch, history, form } = this.props
         const { id } = history.location.query
-        if (Tags.length === 0) {
-            dispatch({ type: "admin/getTags" })
-        }
         dispatch({ type: "admin/getSel", payload: false })
+        if (!Tags.length) {
+            dispatch({ type: "admin/getTags", payload: { pageindex: 1, pagesize: 1000 } })
+        }
         this.setState({ loading: true })
         if (id) {
-            let { data } = await axios.post("http://kaaden.orrzt.com/getDetail", qs.stringify({ id }))
+            const data = await dispatch({ type: "admin/detail", payload: { id } })
             if (data.isok) {
                 this.setState({ imgSrc: data.data.img })
-                let value = {
+
+                form.setFieldsValue({
                     title: data.data.title,
-                    description:data.data.description,
+                    description: data.data.description,
                     content: BraftEditor.createEditorState(data.data.content),
                     authors: data.data.authors,
                     category: data.data.category
-                }
-                form.setFieldsValue({ ...value })
-
+                })
             }
         }
         this.setState({ loading: false })

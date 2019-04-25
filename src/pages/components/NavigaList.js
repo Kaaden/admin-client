@@ -21,6 +21,13 @@ const NavigaList = [
         icon: "bars",
     },
     {
+        key: "img",
+        title: "照片墙",
+        path: "/imgpage",
+        childrenNav: [],
+        icon: "picture",
+    },
+    {
         key: "about",
         title: "关于我的",
         path: "/about",

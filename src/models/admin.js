@@ -13,6 +13,7 @@ export default {
     Tagstotal: 0,
     navtive: true,
     config: "",
+    imgList: [],
   },
 
   reducers: {
@@ -38,6 +39,13 @@ export default {
     },
     saveConfig(state, { payload }) {
       return { ...state, config: payload }
+    },
+    saveImgList(state, { payload }) {
+      let imgList = []
+      if (payload && payload.length) {
+        imgList = payload
+      }
+      return { ...state, imgList }
     }
 
   },
@@ -61,7 +69,7 @@ export default {
       }
     },
     *getTags({ payload }, { call, put }) {
-      const { data } = yield call(service.getTags, { ...payload, pagesize: 10 })
+      const { data } = yield call(service.getTags, { ...payload })
       yield put({ type: "saveTags", payload: { list: data.data, total: data.total } })
     },
     *changeTags({ payload }, { call, put }) {
@@ -100,10 +108,20 @@ export default {
     },
     * updateConfig({ payload }, { call, put }) {
       const { data } = yield call(service.updateConfig, { ...payload })
-      if(data.isok){
+      if (data.isok) {
         yield put({ type: "saveConfig", payload: data.data })
       }
     },
+    * detail({ payload }, { call, }) {
+      const { data } = yield call(service.detail, { ...payload })
+      return data
+    },
+    * findImg(_, { call, put }) {
+      const { data } = yield call(service.findImg)
+      if (data.isok) {
+        yield put({ type: "saveImgList", payload: data.data })
+      }
+    }
   },
 
 

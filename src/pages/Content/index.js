@@ -9,7 +9,7 @@ import axios from "axios"
 import qs from "qs";
 const { Meta } = Card;
 class Page extends Component {
-    state = { loading: false,  list: [], pageindex: 0, hasLoad: true }
+    state = { loading: false, list: [], pageindex: 0, hasLoad: true }
     handleInfiniteOnLoad = async () => {
         let { list, pageindex } = this.state
         this.setState({ loading: true })
