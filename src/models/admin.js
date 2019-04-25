@@ -47,14 +47,14 @@ export default {
     *featchImg({ payload }, { call, put }) {
       const { data } = yield call(service.getBing)
       if (data.isok) {
-        yield put({ type: "saveImg", payload: data.url })
+        yield put({ type: "saveImg", payload: data.data })
       }
     },
     *Login({ payload }, { call, put }) {
       const { data } = yield call(service.Login, { ...payload })
       if (data.isok) {
-        window.sessionStorage.setItem("auth", JSON.stringify(data.info))
-        yield put({ type: "saveLogin", payload: data.info })
+        window.sessionStorage.setItem("auth", JSON.stringify(data.data))
+        yield put({ type: "saveLogin", payload: data.data })
         yield put(routerRedux.push({ pathname: "/home" }))
       } else {
         return message.error(data.msg)
@@ -88,8 +88,8 @@ export default {
     * updateUSER({ payload }, { call, put }) {
       const { data } = yield call(service.updateUser, { ...payload })
       if (data.isok) {
-        window.sessionStorage.setItem("auth", JSON.stringify(data.info))
-        yield put({ type: "saveLogin", payload: data.info })
+        window.sessionStorage.setItem("auth", JSON.stringify(data.data))
+        yield put({ type: "saveLogin", payload: data.data })
       }
     },
     * getConfig({ payload }, { call, put }) {

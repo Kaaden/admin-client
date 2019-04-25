@@ -28,7 +28,7 @@ class Editor extends Component {
         dispatch({ type: "admin/getSel", payload: false })
         this.setState({ loading: true })
         if (id) {
-            let { data } = await axios.post("http://kaaden.orrzt.com/getEditor", qs.stringify({ id }))
+            let { data } = await axios.post("http://kaaden.orrzt.com/getDetail", qs.stringify({ id }))
             if (data.isok) {
                 this.setState({ imgSrc: data.data.img })
                 let value = {

@@ -51,7 +51,7 @@ class Tags extends Component {
                         <Popconfirm placement="top" title="确认删除？" okText="确定" cancelText="取消" onConfirm={() => this.Del(item)}>
                             <Button type="danger" style={{ marginRight: 20 }} >删除</Button>
                         </Popconfirm>
-                        <TagsModal type={false} item={item} />
+                        <TagsModal type={false} item={item} getData={this.getData}/>
                     </div>
                 )
             }
