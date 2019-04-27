@@ -30,7 +30,7 @@ class Page extends Component {
     }
     onDel = async (id) => {
         const { dispatch } = this.props
-        const { data } = await axios.post("http://127.0.0.1:4000/imgChange", qs.stringify({ id, type: "del" }))
+        const { data } = await axios.post("http://kaaden.orrzt.com/imgChange", qs.stringify({ id, type: "del" }))
         if (data.isok) {
             dispatch({ type: "admin/findImg" })
         }
@@ -79,7 +79,7 @@ class UpLoadImg extends Component {
     handleUp = async () => {
         this.setState({ btnloading: true })
         const { img, id, onOpen, dispatch } = this.props
-        const { data } = await axios.post("http://127.0.0.1:4000/imgChange", qs.stringify({ id, img }))
+        const { data } = await axios.post("http://kaaden.orrzt.com/imgChange", qs.stringify({ id, img }))
 
         dispatch({ type: "admin/findImg" })
         const that = this
