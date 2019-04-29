@@ -1,7 +1,7 @@
 import request from '../utils/request';
 import qs from "qs";
 // const addr = "http://127.0.0.1:4000"
-const addr = "http://kaaden.orrzt.com"
+const addr = "http://kaaden.orrzt.com/api"
 const host = addr;
 export const getBing = (body) => {
   return request({

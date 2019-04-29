@@ -86,7 +86,7 @@ class Editor extends Component {
                 component: (
 
                     <Upload
-                        action="http://kaaden.orrzt.com/upload"
+                        action="http://kaaden.orrzt.com/api/upload"
                         onChange={this.handleChange}
                         showUploadList={false}
                     >

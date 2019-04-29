@@ -15,7 +15,7 @@ class Layout extends Component {
         let link = document.querySelector("link[rel*='icon']") || document.createElement("link")
         link.type = "image/x-icon"
         link.rel = "shortcut icon"
-        link.href = "http://kaaden.orrzt.com/public/logo.jpg"
+        link.href = "http://kaaden.orrzt.com/logo.jpg"
         document.getElementsByTagName("head")[0].appendChild(link)
         if (path === "/about" || path === "/home" || path === "/") {
             this.props.dispatch({ type: "admin/featchImg" })

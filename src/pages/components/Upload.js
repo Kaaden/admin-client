@@ -68,7 +68,7 @@ class Page extends Component {
                 listType="picture-card"
                 className="avatar-uploader"
                 showUploadList={false}
-                action="http://kaaden.orrzt.com/upload"
+                action="http://kaaden.orrzt.com/api/upload"
                 onChange={this.handleChange}
             >
                 {imageUrl ? <img style={{ width: "100%" }} src={imageUrl} alt="avatar" /> : <Icon type={loading ? 'loading' : 'plus'} />}
