@@ -21,11 +21,11 @@ class Editor extends Component {
     async componentDidMount() {
         const { Tags, dispatch, history, form } = this.props
         const { id } = history.location.query
+        this.setState({ loading: true })
         dispatch({ type: "admin/getSel", payload: false })
         if (!Tags.length) {
-            dispatch({ type: "admin/getTags", payload: { pageindex: 1, pagesize: 1000 } })
+            dispatch({ type: "admin/getTags"})
         }
-        this.setState({ loading: true })
         if (id) {
             const data = await dispatch({ type: "admin/detail", payload: { id } })
             if (data.isok) {

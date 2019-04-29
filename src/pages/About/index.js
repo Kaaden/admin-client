@@ -26,6 +26,7 @@ class Page extends Component {
                     <Avatar size={84} icon="user" src={user.logo} className={styles.mainlogo} />
                     <div className={styles.mainbox + " f1"}>
                         <DescriptionList size="large" col="1" id="desc">
+
                             <Description term="个人简述" >{user.description}</Description>
                             <Description term="个人介绍">{user.content}</Description>
                         </DescriptionList>

@@ -68,8 +68,8 @@ export default {
         return message.error(data.msg)
       }
     },
-    *getTags({ payload }, { call, put }) {
-      const { data } = yield call(service.getTags, { ...payload })
+    *getTags(_, { call, put }) {
+      const { data } = yield call(service.getTags)
       yield put({ type: "saveTags", payload: { list: data.data, total: data.total } })
     },
     *changeTags({ payload }, { call, put }) {

@@ -20,7 +20,7 @@ export const Login = (body) => {
 export const getTags = (body) => {
   return request({
     method: "post",
-    url: `${host}/tags`,
+    url: `${host}/getTags`,
     data: qs.stringify(body),
   })
 }

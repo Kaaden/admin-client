@@ -30,7 +30,7 @@ class Modals extends Component {
         const { getFieldDecorator } = form
         return (
             <div>
-                <Modal visible={visible} footer={null} closable={false} destroyOnClose={true}>
+                <Modal visible={visible} footer={null} closable={false} destroyOnClose={true} onCancel={handleCancle}>
                     <Form onSubmit={this.handleSubmit}>
                         <FormItem {...formItemLayout} label="标题">
                             {getFieldDecorator("title", {

@@ -17,7 +17,7 @@ class Page extends Component {
         pageindex = pageindex + 1
         let { data } = await axios.post("http://kaaden.orrzt.com/api/getContent", qs.stringify({ status: 1, pageindex }))
         if (data.isok) {
-            await this.setState({
+             this.setState({
                 list: [...list, ...data.data],
                 pageindex,
                 loading: false,
