@@ -1,41 +1,40 @@
 import request from '../utils/request';
-import qs from "qs";
 // const addr = "http://127.0.0.1:4000"
-const addr = "http://kaaden.orrzt.com/api"
-const host = addr;
+const host = "http://kaaden.orrzt.com/api"
+
 export const getBing = (body) => {
   return request({
     method: "post",
     url: `${host}/getBing`,
-    data: qs.stringify(body),
+    data: body,
   })
 }
 export const Login = (body) => {
   return request({
     method: "post",
     url: `${host}/login`,
-    data: qs.stringify(body),
+    data: body,
   })
 }
 export const getTags = (body) => {
   return request({
     method: "post",
     url: `${host}/getTags`,
-    data: qs.stringify(body),
+    data: body,
   })
 }
 export const changeTags = (body) => {
   return request({
     method: "post",
     url: `${host}/changeTags`,
-    data: qs.stringify(body),
+    data: body,
   })
 }
 export const DelTags = (body) => {
   return request({
     method: "post",
     url: `${host}/delTags`,
-    data: qs.stringify(body),
+    data: body,
   })
 }
 
@@ -44,21 +43,21 @@ export const addContent = (body) => {
   return request({
     method: "post",
     url: `${host}/addContent`,
-    data: qs.stringify(body),
+    data: body,
   })
 }
 export const delContent = (body) => {
   return request({
     method: "post",
     url: `${host}/delContent`,
-    data: qs.stringify(body),
+    data: body,
   })
 }
 export const updateUser = (body) => {
   return request({
     method: "post",
     url: `${host}/updateUser`,
-    data: qs.stringify(body),
+    data: body,
   })
 }
 export const getConfig = (body) => {
@@ -71,20 +70,20 @@ export const updateConfig = (body) => {
   return request({
     method: "post",
     url: `${host}/updateConfig`,
-    data: qs.stringify(body),
+    data: body,
   })
 }
 export const detail = (body) => {
   return request({
     method: "post",
     url: `${host}/getDetail`,
-    data: qs.stringify(body),
+    data: body,
   })
 }
 export const findImg = (body) => {
   return request({
     method: "post",
     url: `${host}/findImg`,
-    data: qs.stringify(body),
+    data: body,
   })
 }
